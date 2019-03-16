@@ -7,6 +7,9 @@ const secret = "secret"
 module.exports = {
   create(req, res) {
     db.User.create({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      bio: req.body.bio,
       email: req.body.email,
       password: req.body.password
     })
@@ -23,7 +26,7 @@ module.exports = {
   },
 
   login(req, res) {
-    db.User.findOne({ where: { email: req.body.email } })
+    db.User.findOne({ where: { email: req.body.email, password: req.body.password } })
       .then((user) => {
         if (user) {
           const token = jwt.sign({
