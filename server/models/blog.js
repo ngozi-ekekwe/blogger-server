@@ -1,28 +1,18 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Todo = sequelize.define('Todo', {
-    title: {
-     type: DataTypes.STRING,
-     allowNull: false
-    },
-
-    complete: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
-
-    dayMarkedForCompletion: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-    }
+  var Blog = sequelize.define('Blog', {
+    title: DataTypes.STRING,
+    content: DataTypes.TEXT,
+    slug: DataTypes.STRING
+  }, {
   });
-  Todo.associate = (models) => {
-    Todo.belongsTo(models.User,  {
+  Blog.associate = function(models) {
+    // associations can be defined here
+    Blog.belongsTo(models.User,  {
       foreignKey: 'userId',
-      as: 'todos',
+      as: 'blogs',
       onDelete: 'CASCADE'
     })
   };
-  return Todo;
+  return Blog;
 };

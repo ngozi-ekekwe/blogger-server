@@ -12,7 +12,6 @@ const db        = {};
 
 require('dotenv').config()
 let sequelize
-console.log(config.url, '===========>')
 if (config.url) {
   sequelize = new Sequelize(config.url, config);
 } else {
