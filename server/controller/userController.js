@@ -2,7 +2,6 @@ const db = require('../models');
 const authentication = require('../middleware/auth');
 const jwt = require('jsonwebtoken');
 
-const secret = "secret"
 
 module.exports = {
   create(req, res) {
@@ -23,6 +22,42 @@ module.exports = {
       .catch((err) => {
         res.status(401).send(err)
       })
+  },
+
+  list(req, res) {
+    return db.User
+      .findAll()
+      .then((users) => {
+        res.status(201).send({
+          data: users
+        })
+      })
+      .catch((err) => {
+        res.status(401).send(err);
+      })
+  },
+
+  retrieve(req, res) {
+    return db.User
+      .findAll({
+        where: {
+          id: req.params.userId
+        }
+      })
+      .then((blog) => {
+        if (!blog) {
+          return res.status(404).send({
+            message: "Blog not found"
+          })
+        }
+
+        return res.status(201).send({
+          blog
+        })
+      })
+      .catch((err) => {
+        res.status(401).send(err)
+      });
   },
 
   login(req, res) {
