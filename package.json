@@ -6,9 +6,9 @@
   "author": "ngozi-ekekwe <ngozi.ekekwe@andela.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node server.js",
-    "dev-start": "nodemon server.js",
     "migration": "NODE_ENV=test sequelize db:migrate",
+    "dev-start": "nodemon server.js",
+    "start": "node server.js",
     "preinstall": "sequelize db:migrate:undo",
     "postinstall": "sequelize db:migrate"
   },
