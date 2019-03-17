@@ -23,7 +23,7 @@ module.exports = {
         });
       })
       .catch((err) => {
-        res.status(401).send(err)
+        res.status(401).send({err: err.message})
       })
   },
 
