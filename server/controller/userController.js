@@ -2,6 +2,9 @@ const db = require('../models');
 const authentication = require('../middleware/auth');
 const jwt = require('jsonwebtoken');
 
+const bcrypt =  require('bcrypt-nodejs');
+const secret = process.env.SECRET;
+
 
 module.exports = {
   create(req, res) {
@@ -44,15 +47,15 @@ module.exports = {
           id: req.params.userId
         }
       })
-      .then((blog) => {
-        if (!blog) {
+      .then((user) => {
+        if (!user) {
           return res.status(404).send({
-            message: "Blog not found"
+            message: "user not found"
           })
         }
 
         return res.status(201).send({
-          blog
+          user
         })
       })
       .catch((err) => {
@@ -61,9 +64,14 @@ module.exports = {
   },
 
   login(req, res) {
-    db.User.findOne({ where: { email: req.body.email, password: req.body.password } })
+    db.User.findOne({ where: { email: req.body.email } })
       .then((user) => {
-        if (user) {
+        if (!user) {
+          return res.status(404)
+            .send({ message: 'failed to authenticate user' });
+        }
+
+        if(bcrypt.compareSync(req.body.password, user.password)) {
           const token = jwt.sign({
             UserId: user.id,
           }, secret, {
@@ -75,9 +83,13 @@ module.exports = {
             expiresIn: '2 days',
           });
         }
-        return res.status(401).send({
-          message: 'failed to authenticate user'
-        });
+        else {
+          return res.status(404).send({
+            message: 'Incorrect password'
+          });
+        }
+      }).catch((err) => {
+        res.status(400).send(err.errors);
       });
   },
 }
