@@ -21,7 +21,7 @@ app.options('*', cors())
 
 app.get("*", (req, res) => {
     res.status(201).send({
-        message: "My todo Api"
+        message: "My Blog Api"
     })
 })
 
