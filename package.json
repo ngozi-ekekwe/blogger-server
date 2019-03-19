@@ -6,6 +6,8 @@
   "author": "ngozi-ekekwe <ngozi.ekekwe@andela.com>",
   "license": "MIT",
   "scripts": {
+    "test": "NODE_ENV=test mocha './tests/**/*.test.js'",
+    "test-setup": "npm run migration",
     "migration": "NODE_ENV=test sequelize db:migrate",
     "dev-start": "nodemon server.js",
     "start": "node server.js",
@@ -18,11 +20,14 @@
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "faker": "^4.1.0",
     "helmet": "^3.16.0",
     "jsonwebtoken": "^8.5.0",
+    "mocha": "^6.0.2",
     "morgan": "^1.9.1",
     "node": "^11.11.0",
     "nodemon": "^1.18.10",
@@ -31,6 +36,7 @@
     "pg-hstore": "^2.3.2",
     "sequelize": "^5.1.0",
     "sequelize-cli": "^5.4.0",
-    "server.js": "^1.0.0"
+    "server.js": "^1.0.0",
+    "supertest": "^4.0.2"
   }
 }
